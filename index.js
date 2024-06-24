@@ -20,7 +20,7 @@ const apiProxy = createProxyMiddleware('/api', {
     }
 });
 
-app.use('/api', apiProxy);
+app.use('/', apiProxy);
 
 const PORT = 3000;
 app.listen(PORT, () => {
