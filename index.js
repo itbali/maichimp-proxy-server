@@ -5,15 +5,7 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 
 const app = express();
 dotenv.config();
-app.use(cors(
-    (origin, callback)=>{
-    if (origin.host?.includes("aired.tv")) {
-        callback(null, true);
-    } else {
-        callback(new Error('Not allowed by CORS'));
-    }
-}
-));
+app.use(cors());
 const apiProxy = createProxyMiddleware('/', {
     target: 'https://us7.api.mailchimp.com/3.0',
     changeOrigin: true,
