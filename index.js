@@ -5,7 +5,7 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 
 const app = express();
 app.use(cors((origin, callback)=>{
-    if (origin.includes("vercel.app")) {
+    if (origin.includes("aired.tv")) {
         callback(null, true);
     } else {
         callback(new Error('Not allowed by CORS'));
