@@ -14,9 +14,6 @@ app.use(cors((origin, callback)=>{
 const apiProxy = createProxyMiddleware('/api', {
     target: 'https://us7.api.mailchimp.com/3.0',
     changeOrigin: true,
-    pathRewrite: {
-        '^/api': '',
-    },
     onProxyReq: (proxyReq) => {
         console.log('proxyReq to '+process.env.MAILCHIMP_KEY, proxyReq);
         proxyReq.setHeader('Authorization', `Basic ${Buffer.from(`anystring:${process.env.MAILCHIMP_KEY}`).toString('base64')}`);
