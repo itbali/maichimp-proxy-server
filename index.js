@@ -4,18 +4,20 @@ const dotenv = require('dotenv');
 const {createProxyMiddleware} = require('http-proxy-middleware');
 
 const app = express();
-app.use(cors((origin, callback)=>{
-    if (origin.includes("aired.tv")) {
+dotenv.config();
+app.use(cors(
+    (origin, callback)=>{
+    if (origin.host?.includes("aired.tv")) {
         callback(null, true);
     } else {
         callback(new Error('Not allowed by CORS'));
     }
-}));
-const apiProxy = createProxyMiddleware('/api', {
+}
+));
+const apiProxy = createProxyMiddleware('/', {
     target: 'https://us7.api.mailchimp.com/3.0',
     changeOrigin: true,
     onProxyReq: (proxyReq) => {
-        console.log('proxyReq to '+process.env.MAILCHIMP_KEY, proxyReq);
         proxyReq.setHeader('Authorization', `Basic ${Buffer.from(`anystring:${process.env.MAILCHIMP_KEY}`).toString('base64')}`);
     }
 });
